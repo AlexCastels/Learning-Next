@@ -4,6 +4,8 @@ suddiviso tra cartelle che conterranno le page.jsx , all'interno conterranno la 
 contenuti in una cartella esterna in src, app dovrà contenere soltanto le route per le varie pagine
 Il path dell'homepage di defauilt è settato a "/"
 
+Esistono due tipi di componenti "use client" e "use server"
+
 Per una maggiore pulizia del folder app, questo dovrebbe contenere solamente routes, pages e API route e nient'altro
 
 -con (auth) è possibile raggruppare più cartelle per avere più ordine globale
@@ -29,6 +31,9 @@ per poter utilizzare le classi contenute in un modulo bisognerà importare gli s
 i moduli durante l'ispezione della pagina garantiscono la creazione automatica di classi uniche, questo dà la possibilità di poter
 dare gli stessi nomi a classi su file diversi, evitando conflitti, se in global.css e navbar.css esiste una stessa classe 
 .container si creerebbe un conflitto, e una classe sovrascriverebbe l'altra
+
+Next migliora il data caching della nostra applicazione, anche con le immagini mette a disposizione un componente <Image/> che permette di poter cachare le immagini e le sue risoluzioni e ottimizzarle per la visualizzazione per ogni grandezza dello schermo
+Next base non ci permette di importare img da siti esterni, per poterlo fare bisognerà specificare il sito di importazione nel file di configurazione, tutte le immagini saranno percepite nella cartella _next creata in fase di build per il data chaching
 
 NEXT HOOKS
 Next mette a disposizione ulteriori hooks diversi da quelli di react base

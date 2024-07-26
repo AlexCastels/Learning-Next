@@ -1,6 +1,6 @@
 :root{
-    --bg: #00041a;
-    --bgSoft: #000b48;
+    --bg: #0d0c22;
+    --bgSoft: #00072a;
     --text: white;
     --textSoft: #e7e7e7;
     --btn: #026ea8;
@@ -23,7 +23,7 @@ a{
 }
 
 .global-container{
-    background-color: rgb(80, 80, 80);
+    background-color: var(--bg);
     width: 1500px;
     margin: auto;
     padding:1rem;

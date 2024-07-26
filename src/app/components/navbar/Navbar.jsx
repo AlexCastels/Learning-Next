@@ -32,7 +32,7 @@ function Navbar(){
     return (
         <div className={styles.container}>
             <div className={styles.logo}>
-                <p>Logo</p>
+                <Link href={"/"}>Logo</Link>
             </div>
             <div>
                 <div className={styles.links}>
