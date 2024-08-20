@@ -70,3 +70,9 @@ a{
         width: 475px;
     }
 }
+
+@media( max-width: 475px){
+    .global-container{
+        width: 380px;
+    }
+}

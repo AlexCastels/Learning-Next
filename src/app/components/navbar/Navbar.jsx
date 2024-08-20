@@ -4,6 +4,7 @@ import Link from "next/link"
 import styles from "./navbar.module.css"
 import NavLinks from "./NavLinks"
 import { useState } from "react"
+import Image from "next/image";
 
 function Navbar(){
     const links = [
@@ -49,7 +50,8 @@ function Navbar(){
                     )}
                 </div>
                 <div className={styles.mobileNav}>
-                    <button className={styles.menuBtn} onClick={() => setOpen(prev => !prev)}>Menu</button>
+                    {/* <button className={styles.menuBtn} onClick={() => setOpen(prev => !prev)}>Menu</button> */}
+                    <Image className={styles.menuBtn} src="/menu.png" alt="menu img" width={30} height={30} onClick={() => setOpen(prev => !prev)}></Image>
                     {
                         open && <div className={styles.mobileLinks}>
                             {links.map((link) => (
