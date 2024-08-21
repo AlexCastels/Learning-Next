@@ -37,4 +37,59 @@ Next base non ci permette di importare img da siti esterni, per poterlo fare bis
 
 NEXT HOOKS
 Next mette a disposizione ulteriori hooks diversi da quelli di react base
--usePathname() : recupera la parte finale del link, utilizzato per poter creare controlli e verifiche sul path corrente (simile a useLocation in react)
+-usePathname() [CSR] : recupera la parte finale del link, utilizzato per poter creare controlli e verifiche sul path corrente (simile a useLocation in react)
+-useRouter() [CSR] : permette la navigazione in diversi modi (spiegato più avanti)
+-useSearchParams() [CSR] : permette di recuperare le query (richieste)
+const search = useSearchParams() -> const q = search.get("q"),  è possibile settare nuove query con .set()
+
+RENDERING COMPONENTS
+Next permette di renderizzare componenti in due maniere, in server side e client side.
+SSR: un utente che naviga il sito manda una richiesta, come viene processata questa richiesta, viene mandata al server che 
+    compilerà HTML statico che verrà poio idratato tramite js per le interazioni della nostra pagina, e dopo questo processo
+    sarà possibile utilizzare a pieno la nostra pagina web, dunque la compilazione sarà interamente gestita lato server.
+    Ci sono pro e contro, i pro sono il fatto di avere un caricamento della pagina più veloce dipende la connessione internet,
+    permette di favorire la navigazione dell'app in dispositivi vecchi e con connessioni anche lente, migliora l'ottimizzazione lato *SEO* ricevendo come prima cosa una pagina precompilata HTML e non una pagina totalmente vuota, ma ci sono anche dei contro, inizialmente (per pochi secondi) si avrà meno interazione, si incrementano le richieste ed il carico di lavoro del server, si potrebbe avvertirè più lentezza nel caricamento di alcune pagine, perchè ogni navigaizone sarà una richiesta a sè, e la gestione dello stato per la manipolazione dei dati sarà molto più complicato da affrontare.
+CSR: Tramite il client rendering l'intera app verrà caricata utilizzando le risorse dell'utente (dispositivo), la richiesta viene
+    processata inizialmente mandando un file HTML vuoto che verrà poi idratato completamente dal JS durante il caricamento dell'app
+    Ovviamente il caricamento dell'app dipenderà esclusivamente dalle risorse che ha a disposizione l'utente, quindi app più pesanti potrebbero risultare più difficoltose da caricare, l'ottimizzazione *SEO* può essere afflitta visto l'HTML vuoto iniziale mandato, come pro si hanno prestazioni iniziali migliori, meno caricamenti da parte del server, e una migliore esperienza interattiva per l'utente
+
+Di default tutti i componenti in NEXT sono renderizzati in SSR, ma è possibile poter combinare i due tipi di render, per poter specificare quale componente deve essere CSR basterà solamente specificare in alto nel componente creato "use client", questo ci permetterà di poter utilizzare hook ed eventi per poter interagire con l'utente. 
+
+UTILIZZANDO COMPONENTI IN SSR NON SARA' POSSIBILE POTER CREARE INTERAZIONI CON L'UTENTE, ANCHE UN CONSOLE.LOG SARA' VISUALIZZATO SOLAMENTE NEL SERVER E NON NEL BROWSER
+
+Durante il rendering di un componente CSR è possibile incontrare un problema con la lettura dei dati, nonostante un componente sia CSR verrà sempre precompilato e letto in SSR, la lettura dei dati avviene in modo asincrono, ed è possibile che lato server venga mostrato un dato, e lato client un altro, per poter evitare questo problema esistono 3 soluzioni:
+1- useEffect(()=>{}) con variabile di stato true false, dunque aspettiamo che il dato venga effettivamente letto e registrato e
+    tramite un conditional rendering lo mostriamo o utilizziamo nel componente.
+2- Disabilitare SSR in componente, importiamo il componente in maniera dinamica tramite "dynamic()" di next, e specifichiamo che
+    il componente importato deve avere SRR disabilitato:
+    const MioComponente = dynamic(() => import("/pathdelcomponente") , {ssr: false})
+    in questa maniera potremo utilizzare il componente importato e avrà SRR disabilitato.
+3- Utilizziamo il dato dentro un elemento HTML che avrà come attributo "suppressHydratationWarning" fornito da NEXT
+    (metodo solamente per rimuovere l'errore fornito da next, ma non risolve realmente il problema)
+
+Utilizzando un componente "use client" per wrappare altri componenti nell'app, ad esempio un context o un provider, i componenti wrappati saranno comunque SSR (se in principio sono SSR), comunque non verranno "modificati"
+
+NAVIGATION
+Ci sono diversi modi per poter navigare in NEXT,
+Il componente Link di NEXT avvia un prefetch della pagina a cui riporta, per poter migliorare la velocità dell'esperienza utente, nel caso in cui siano presenti più link però questo comportamento potrebbe ridurre le prestazioni, per poter risolvere questo problema possiamo aggiungere al comp un attributo "prefetch={false}"
+
+Un altro modo per permettere il routing è utilizzare useRouting() (importato da next/navigation più moderno), simili ad useNavigation() in react, permette di poter "pushare" verso un altra pagina dell'app. 
+const router = useRouter() [CSR]
+router.push("/") -> tramite un evento renderizza al path indicato 
+router.replace("/") -> questo permette di non creare una 'cronologia' nella navigazione e di renderizzare al path
+router.refresh() -> permette di refreshare la pagina 
+router.back() -> permette di navigare la pagina precedente
+router.forward() -> permette di navigare la pagina successiva
+
+useSearchParams() [CSR] : permette di recuperare le query (richieste)
+const search = useSearchParams() -> const q = search.get("q"),  è possibile settare nuove query con .set()
+
+Lato [SSR] è possibile andare a destrutturare nel componente delle prop specifiche, function MioComp({params , searchParams}){}
+params = permette di accedere ai parametri ricevuti attraverso il path (anche generico -> [title])
+searchParams = permette di accedere alle query 
+
+FETCHING DATA
+In next di default tutti i dati fetchati sono chachati, per poter prevenire questo comportamento possiamo specificare
+nel fetch {cache : "no-store"}, come secondo argomento, in questa maniera possiamo anche essere sicuri di avere sempre dati
+aggiornati visto il refresh del fetch, sempre nel fetch abbiamo molte altre opzioni da poter settare a disposizione
+{next: {revalidate:3600}} così indichiamo di refreshare il fetch ogni ora
