@@ -20,14 +20,10 @@ function BlogPage(){
             console.log(error);    
         }
     }
-
+    
     useEffect(()=>{
         getData()
     },[])
-
-    if(data){
-        console.log(data);
-    }
 
     return (
         <div className={styles.container}>
