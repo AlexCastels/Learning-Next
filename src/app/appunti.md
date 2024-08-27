@@ -93,9 +93,10 @@ In next di default tutti i dati fetchati sono chachati, per poter prevenire ques
 nel fetch {cache : "no-store"}, come secondo argomento, in questa maniera possiamo anche essere sicuri di avere sempre dati
 aggiornati visto il refresh del fetch, sempre nel fetch abbiamo molte altre opzioni da poter settare a disposizione
 {next: {revalidate:3600}} così indichiamo di refreshare il fetch ogni ora.
-E' anche possibile fetchare dati senza un API direttamente
 
 NEXT COMPONENTS
 <Suspense fallback={<div>Loading..</div>}>
     <Altro div>
 </Suspense> = si tratta di un componente fornito da next che permette di inserire elementi mdurante il caricamento di un altro componente, esempio in blog page con gli autori dei post, in queso esempio verrà mostrata la scritta Loading in attesa che il/i componenti al suo interno vengano tutti caricati e renderizzati
+
+
