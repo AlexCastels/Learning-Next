@@ -93,6 +93,9 @@ In next di default tutti i dati fetchati sono chachati, per poter prevenire ques
 nel fetch {cache : "no-store"}, come secondo argomento, in questa maniera possiamo anche essere sicuri di avere sempre dati
 aggiornati visto il refresh del fetch, sempre nel fetch abbiamo molte altre opzioni da poter settare a disposizione
 {next: {revalidate:3600}} così indichiamo di refreshare il fetch ogni ora.
+è possibile indicare anche il no-store attraverso una funzione, utilizzato generalmente in node o nel server
+import { unstable_noStore } from "next/cache"; unstable_noStore() -> dentro la query per evitare di chachare i dati
+(questo metodo in next è ancora instabile)
 
 NEXT COMPONENTS
 <Suspense fallback={<div>Loading..</div>}>

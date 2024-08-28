@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import * as mongoose from 'mongoose';
 
 //mongoose permette di poter creare tabelle nel DB attraverso gli Schemi, altro non sono che la rappresentazioni delle tabelle
 //sottoforma di obj

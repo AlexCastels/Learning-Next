@@ -25,7 +25,7 @@ function BlogPage(){
     useEffect(()=>{
         getData()
     },[])
-
+    
     return (
         <div className={styles.container}>
             {data && data.map((item) => {
