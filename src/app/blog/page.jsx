@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react"
 import PostCard from "../components/postCard/postCard"
 import styles from "./blog.module.css"
-import { getPosts } from "../../../server/data"
 
 function BlogPage(){
 
     const [data , setData] = useState()
+
 
     //in next di default tutti i dati fetchati sono chachati, per poter prevenire questo comportamento possiamo specificare
     //nel fetch {cache : "no-store"}, come secondo argomento

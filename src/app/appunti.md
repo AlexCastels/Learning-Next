@@ -96,10 +96,34 @@ aggiornati visto il refresh del fetch, sempre nel fetch abbiamo molte altre opzi
 è possibile indicare anche il no-store attraverso una funzione, utilizzato generalmente in node o nel server
 import { unstable_noStore } from "next/cache"; unstable_noStore() -> dentro la query per evitare di chachare i dati
 (questo metodo in next è ancora instabile)
+Next js previente il multifetching, cioè che, nel caso in cui nella stessa pag si tenta di fetchare lo stesso url, non verranno avviati 2 fetch, ma la chiamata sarà sempre una singola
 
 NEXT COMPONENTS
 <Suspense fallback={<div>Loading..</div>}>
     <Altro div>
 </Suspense> = si tratta di un componente fornito da next che permette di inserire elementi mdurante il caricamento di un altro componente, esempio in blog page con gli autori dei post, in queso esempio verrà mostrata la scritta Loading in attesa che il/i componenti al suo interno vengano tutti caricati e renderizzati
+
+SEO Search Engine Optimization
+SSR
+Next mette a disposizione un miglioramento per il SEO, dove il tutto viene gestito e organizzato nei metadata.
+in layout.js
+export const metadata = {
+    title: {
+        default:"Next Homepage",
+        template: "%s | Next App"
+    },
+    description: "First Next.js App",
+};
+con %s possiamo rendere dinamico l'inserimento del title recuperando la stringa dalle altre const metadata presenti nell'app
+questa funzione di default può essere inserita in tutte le pagine che vogliamo, per poter migliorare la SEO nella nostra app
+
+CSR
+import Head from 'next/head';
+{/* Utilizza il componente Head per impostare i metadata */}
+<Head>
+  <title>{metadata.title}</title>
+  <meta name="description" content={metadata.description} />
+</Head>
+Lato client non è possibile gestire i metadata come sopra riportato, Next fornisce un componente Head dove al suo interno e possibile specificare title e meta, per il SEO 
 
 
