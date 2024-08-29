@@ -1,10 +1,12 @@
 E' un framework di react , in Next cambia l'idea classica di routing, dove il tutto viene comandato dal ''App routing''
 Si tratta di poter creare cartelle che altro non saranno il path corrispondente alla pagina al loro interno, il tutto viene 
-suddiviso tra cartelle che conterranno le page.jsx , all'interno conterranno la pagine in se con i vari componenti, che poi saranno
+suddiviso tra cartelle che conterranno le page.jsx (il file deve essere esclusivamente chiamato in questo modo per essere riconsociuto da next come route da seguire) , all'interno conterranno la pagine in se con i vari componenti, che poi saranno
 contenuti in una cartella esterna in src, app dovrà contenere soltanto le route per le varie pagine
 Il path dell'homepage di defauilt è settato a "/"
 
 Esistono due tipi di componenti "use client" e "use server"
+
+APP ROUTES
 
 Per una maggiore pulizia del folder app, questo dovrebbe contenere solamente routes, pages e API route e nient'altro
 
@@ -138,4 +140,8 @@ guardare meglio appunti in "ServerActionTest" e "Action.js"
 Le action sono comode per poter manipolare il server senza il bisogno di funzioni complesse o specificare delle API dirette
 ovviamente quest'ultime sono possibili da implementare ugualmente
 
+API ROUTES IN NEXT
+Simile come il routing, next permette di creare facilmente delle API , attraverso il sistema di cartelle , per distinguiere un API da una route la cartella globale dovrà essere chiamata 'api' e al suo interno nelle varie cartelle che staranno ad indicare il path delle API il file dovrà essere nominato route.js/ts, in questo modo sarà riconosciuto come API, come il routing delle pagine anche nelle API è possibile utilizzare il folder dinamico con le []
+Altri appunti dentro server/blog/route.jd
 
+NEXT AUTHENTICATION with AUTH.JS

@@ -1,4 +1,4 @@
-import { addPost, deletePost} from "../../../server/action"
+import { addPost, deletePost} from "../server/action"
 
 function ServerAction(){
 

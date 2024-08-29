@@ -1,5 +1,41 @@
 import * as mongoose from 'mongoose';
 
+const connection = {};
+
+const connectToDb = async () => {
+    try {
+        if(connection.isConnected) {
+            console.log("Using existing connection");
+            return;
+        }
+        const db = await mongoose.connect(process.env.MONGO ,  {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        connection.isConnected = db.connections[0].readyState;
+    } catch (error) {
+        console.log(error);
+        throw new Error(error);
+    }
+};
+
+export default connectToDb;
+
+// export async function connectToDb(){
+//     try {
+//         await mongoose.connect(process.env.MONGO , {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true,
+//           })
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+
+//così è possibile collegarsi al nostro server mongo atlas tramite mongoose, richiameremo la funzione nel momento in cui vogliamo
+//connetterci al DB
+
 //mongoose permette di poter creare tabelle nel DB attraverso gli Schemi, altro non sono che la rappresentazioni delle tabelle
 //sottoforma di obj
 

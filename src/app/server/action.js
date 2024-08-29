@@ -2,8 +2,9 @@
 //è possibile indicarlo in cima
 
 import { revalidatePath } from "next/cache";
-import { Post } from "./models";
-import { connectToDb } from "./utils"
+import connectToDb, { Post } from "./models";
+
+
 
 export const addPost = async (data) => {
     "use server"
