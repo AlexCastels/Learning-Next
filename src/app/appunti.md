@@ -10,7 +10,7 @@ APP ROUTES
 
 Per una maggiore pulizia del folder app, questo dovrebbe contenere solamente routes, pages e API route e nient'altro
 
--con (auth) è possibile raggruppare più cartelle per avere più ordine globale
+-con le () è possibile raggruppare più cartelle per avere più ordine globale
 -con le [id] possiamo specificare un path generico, dato da un titolo o un id (esempio dei post nel blog)
 
 COMPONENTI LAYOUT
@@ -145,3 +145,5 @@ Simile come il routing, next permette di creare facilmente delle API , attravers
 Altri appunti dentro server/blog/route.jd
 
 NEXT AUTHENTICATION with AUTH.JS
+Per l'autenticazione in next utilizzaimo Auth.js, una libreria che permette di collegarsi a molteplici providers come github fb ecc ecc e permette di creare automaticamente i collegamenti per le richieste attraverso loro.
+Viene configurato in un certo modo , bisogna seguire la documentazione 

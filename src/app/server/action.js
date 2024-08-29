@@ -1,13 +1,15 @@
+"use server"
 // "use server" nel caso in cui si abbiano più action, piuttosto che specificare use server all'interno di ognuna di esse
 //è possibile indicarlo in cima
 
 import { revalidatePath } from "next/cache";
 import connectToDb, { Post } from "./models";
+import { signOut } from "./auth";
 
 
 
 export const addPost = async (data) => {
-    "use server"
+    // "use server"
     //tramite .get ed il name specifico dell'input possiamo salvare in una var il valore di quell'input
     //dentro la funzione l'arg rispecchia i dati provenienti dal form dov'è specificata la action
     //utilizziamo Object.fromEntries(data) per poter destrutturare data e poter ottenere il valore
@@ -41,7 +43,7 @@ export const addPost = async (data) => {
 }
 
 export async function deletePost(data){
-    "use server"
+    // "use server"
     const {id} = Object.fromEntries(data)
     try {
         connectToDb()
@@ -51,4 +53,8 @@ export async function deletePost(data){
     } catch (error) {
         console.log(error);
     }
+}
+
+export async function handleLogout(){
+    await signOut()
 }
