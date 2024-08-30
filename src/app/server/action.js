@@ -3,8 +3,9 @@
 //è possibile indicarlo in cima
 
 import { revalidatePath } from "next/cache";
-import connectToDb, { Post } from "./models";
-import { signOut } from "./auth";
+import connectToDb, { Post, User } from "./models";
+import { signIn, signOut } from "./auth";
+import bcrypt from "bcryptjs"
 
 
 
@@ -57,4 +58,52 @@ export async function deletePost(data){
 
 export async function handleLogout(){
     await signOut()
+}
+
+export async function handleGithubLogin(){
+    "use server"
+    await signIn("github")
+}
+
+//qui stiamo creando un azione per registrarsi, dove recuperiamo i dati dal form e verifichiamo come prima cosa se la pass
+//è stata digitata per la seconda volta correttamente, dopo di che ci colleghiamo al DB e come prima cosa controlliamo se
+//l'utente esiste tramite username e findOne, se esiste blocchiamo il processo, se non esiste creiamo un nuovo utente con lo
+//schema User e salviamo i dati recuperati dal form, (img non è required nello schema) infine salviamo il newUser nel DB
+//di norma è sconsigliato storare la password direttamente come inserita nel db, ma bisognerebbe criptarla, per questo
+//utilizziamo una libreria esterna bcrypt che permette di criptare le password in hash ed evitare così possibili problemi
+export async function register(formData){
+    const {username , email, password, passwordRepeat , img} = Object.fromEntries(formData);
+    if(password !== passwordRepeat){ return "Passowrd don't match!"};
+    try {
+        connectToDb()
+        const user = await User.findOne({username});
+        if(user){ return "User already exist"};
+
+        const salt = await bcrypt.genSalt(10) //viene generato un codice random
+        const hashedPassword = await bcrypt.hash(password , salt) //viene combinato il cod con la password in codice hash
+
+        const newUser = new User({
+            username,
+            email,
+            password : hashedPassword, //la password salvata sarà adesso quella criptata
+            img,
+        })
+
+        await newUser.save()
+        console.log("save to DB");
+    } catch (error) {
+        console.log(error);
+        return {error : "Something went wrong!"}
+    }
+}
+
+export async function login(formData){
+    const {username ,password} = Object.fromEntries(formData);
+    try {
+        //mandiamo un obj con i dati da utilizzare in auth per il provider
+        await signIn("credentials" , {username , password})
+
+    } catch (error) {
+        console.log(error);
+    }
 }
