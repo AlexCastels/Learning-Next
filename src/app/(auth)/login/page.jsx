@@ -1,9 +1,11 @@
+import LoginForm from "@/app/components/loginForm/LoginForm"
 import { handleGithubLogin, login } from "@/app/server/action"
+import styles from "./loginPage.module.css"
 import { auth, signIn } from "@/app/server/auth"
 
 //auth() ci permette di poter loggare tutte le info sull'autenticazione 
 
-function Login(){
+function LoginPage(){
     // const session = async () => {
     //     "use server"
     //     const session = await auth()
@@ -11,17 +13,15 @@ function Login(){
     // }
 
     return (
-        <>
-            <form action={handleGithubLogin}>
-                <button>Login With Github</button>
-            </form>
-            <form action={login}>
-                <input type="text" placeholder="Username" name="username" />
-                <input type="text" placeholder="Password" name="password" />
-                <button>Login with credentials</button>
-            </form>
-        </>
+        <div className={styles.container}>
+            <div className={styles.wrapper}>
+                <form action={handleGithubLogin}>
+                    <button className={styles.github}>Login With Github</button>
+                </form>
+                <LoginForm/>
+            </div>
+        </div>
     )
 }
 
-export default Login
+export default LoginPage

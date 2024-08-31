@@ -38,11 +38,15 @@ Next migliora il data caching della nostra applicazione, anche con le immagini m
 Next base non ci permette di importare img da siti esterni, per poterlo fare bisognerà specificare il sito di importazione nel file di configurazione, tutte le immagini saranno percepite nella cartella _next creata in fase di build per il data chaching
 
 NEXT HOOKS
+Importante: tutti gli hook, sia di next che di react possono essere utilizzati SOLAMENTE in componenti lato client, non server,
+dunque un modo per implementare le due cose è creare la parte di componente che deve utilizzare gli hook fuori dal componente
+padre che potenzialmente potrebbe essere "use server", ad esempio Register ed il suo Form
 Next mette a disposizione ulteriori hooks diversi da quelli di react base
 -usePathname() [CSR] : recupera la parte finale del link, utilizzato per poter creare controlli e verifiche sul path corrente (simile a useLocation in react)
 -useRouter() [CSR] : permette la navigazione in diversi modi (spiegato più avanti)
 -useSearchParams() [CSR] : permette di recuperare le query (richieste)
 const search = useSearchParams() -> const q = search.get("q"),  è possibile settare nuove query con .set()
+-const [state, formAction] = useActionState(increment, 0) hook per gestire lo stato in un form, spiegato in RegisterForm.jsx
 
 RENDERING COMPONENTS
 Next permette di renderizzare componenti in due maniere, in server side e client side.

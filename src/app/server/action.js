@@ -71,13 +71,19 @@ export async function handleGithubLogin(){
 //schema User e salviamo i dati recuperati dal form, (img non è required nello schema) infine salviamo il newUser nel DB
 //di norma è sconsigliato storare la password direttamente come inserita nel db, ma bisognerebbe criptarla, per questo
 //utilizziamo una libreria esterna bcrypt che permette di criptare le password in hash ed evitare così possibili problemi
-export async function register(formData){
+//la funzione collegata a RegisterForm.jsx ritorna l'esito dei controlli sottoforma di obj, che vengono recuperati dallo
+//state e utilizzati per stampare a video info per l'utente
+export async function register(previousState , formData){
     const {username , email, password, passwordRepeat , img} = Object.fromEntries(formData);
-    if(password !== passwordRepeat){ return "Passowrd don't match!"};
+    if(password !== passwordRepeat){ 
+        return { error : "Passowrd don't match!"}
+    };
     try {
         connectToDb()
         const user = await User.findOne({username});
-        if(user){ return "User already exist"};
+        if(user){ 
+            return { error : "User already exist"}
+        };
 
         const salt = await bcrypt.genSalt(10) //viene generato un codice random
         const hashedPassword = await bcrypt.hash(password , salt) //viene combinato il cod con la password in codice hash
@@ -91,19 +97,23 @@ export async function register(formData){
 
         await newUser.save()
         console.log("save to DB");
+        return {success : true}
     } catch (error) {
         console.log(error);
         return {error : "Something went wrong!"}
     }
 }
 
-export async function login(formData){
+export async function login(previousState , formData){
     const {username ,password} = Object.fromEntries(formData);
     try {
         //mandiamo un obj con i dati da utilizzare in auth per il provider
         await signIn("credentials" , {username , password})
-
     } catch (error) {
         console.log(error);
+        if(error.message.includes("CredentialsSignin")){
+            return { error : "Invalid username or password"}
+        }
+        throw error
     }
 }

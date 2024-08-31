@@ -30,7 +30,7 @@ const login = async (credentials) => {
 //dovranno essere gestite, in questo caso solamente GET e POST, le altre funzioni sono importate da NextAuth e:
 export const {
     handlers: { GET, POST },
-    auth, //serve per poter tracciare i dati delle chiamate per un controllo, ritorna un obj
+    auth, //serve per poter vedere i dati della sessione utente
     signIn, //è una funzione che permette di poter iscriversi tramite il provider selezionato
     signOut, //permette di potersi sloggare con il proprio account
 } = NextAuth({
