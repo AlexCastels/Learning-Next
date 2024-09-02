@@ -28,17 +28,17 @@ export const authConfig = {
             const isOnLoginPage = request.nextUrl?.pathname.startsWith("/login")
             console.log(auth);
             //ONLY ADMIN CAN REACH ADMIN PANEL
-            if(isOnAdminPanel && !user?.isAdmin){
-                return false
-            }
+            // if(isOnAdminPanel && !user?.isAdmin){
+            //     return false
+            // }
             //ONLY AUTHENTICATED USERS CAN REACH BLOG PAGE
-            if(isOnBlogPage && !user){
-                return false
-            }
+            // if(isOnBlogPage && !user){
+            //     return false
+            // }
             //ONLY AUTHENTICATED USERS CAN REACH LOGIN PAGE
-            if(isOnLoginPage && user){
-                return Response.redirect(new URL("/" , request.nextUrl))
-            }
+            // if(isOnLoginPage && user){
+            //     return Response.redirect(new URL("/" , request.nextUrl))
+            // }
             return true
         }
     }

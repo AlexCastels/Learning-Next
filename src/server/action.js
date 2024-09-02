@@ -7,8 +7,6 @@ import connectToDb, { Post, User } from "./models";
 import { signIn, signOut } from "./auth";
 import bcrypt from "bcryptjs"
 
-
-
 export const addPost = async (data) => {
     // "use server"
     //tramite .get ed il name specifico dell'input possiamo salvare in una var il valore di quell'input
@@ -38,6 +36,7 @@ export const addPost = async (data) => {
         await newPost.save()
         console.log("ok! Save to DB");
         revalidatePath("/blog")
+        revalidatePath("/admin")
     } catch (error) {
         console.log(error);
     }
@@ -51,6 +50,7 @@ export async function deletePost(data){
         await Post.findByIdAndDelete(id);
         console.log("Post deleted!");
         revalidatePath("/blog")
+        revalidatePath("/admin")
     } catch (error) {
         console.log(error);
     }
@@ -115,5 +115,38 @@ export async function login(previousState , formData){
             return { error : "Invalid username or password"}
         }
         throw error
+    }
+}
+
+export async function addUser(previousState , formData){
+    const {username , email , password , img} = Object.fromEntries(formData)
+    try {
+        connectToDb()
+        const newUser = new User({
+            username ,
+            email,
+            password,
+            img
+        })
+        await newUser.save()
+        console.log("Saved to DB");
+        revalidatePath("/admin")
+    } catch (error) {
+        console.log(error);
+        return {error : "Something went wrong!"}
+    }
+}
+
+export async function deleteUser(formData){
+    const {id} = Object.fromEntries(formData)
+    try {
+        connectToDb()
+        await Post.deleteMany({userId:id})
+        await User.findByIdAndDelete(id)
+        console.log("Deleted From DB");
+        revalidatePath("/admin")
+    } catch (error) {
+        console.log(error);
+        return {error : "Something went wrong!"}
     }
 }
