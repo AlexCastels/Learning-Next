@@ -5,8 +5,9 @@ import styles from "./navbar.module.css"
 import NavLinks from "./NavLinks"
 import { useEffect, useState } from "react"
 import Image from "next/image";
-import { handleLogout } from "@/app/server/action";
-import { auth } from "@/app/server/auth";
+import { handleLogout } from "@/server/action";
+import { auth } from "@/server/auth";
+import { getSession } from 'next-auth/react'
 
 function Navbar(){
     const links = [
@@ -27,18 +28,18 @@ function Navbar(){
     ] 
 
     const [open , setOpen] = useState(false)
-    const [session , setSession] = useState(true)
+    const [session , setSession] = useState({})
 
     //Temporanei
     // const session = true
-    const isAdmin = true
+    // const isAdmin = true
 
-    //modificare il comp navbar come nel video, e implementare la richiesta auth che recupera i dati dell'utente
+    //!!!!!modificare il comp navbar come nel video, e implementare la richiesta auth che recupera i dati dell'utente
     async function handleSession(){
         try {
-            const session = await auth()
-            setSession((p) => !p )
+            const session = await getSession()
             console.log(session);  
+            setSession(session)
         } catch (error) {
             console.log(error);
         }    
@@ -46,7 +47,7 @@ function Navbar(){
 
     useEffect(()=> {
         handleSession()
-        console.log(session)
+        console.log(session);
     },[])
 
     return (
@@ -59,7 +60,7 @@ function Navbar(){
                     {links.map((link) => 
                         <NavLinks item={link} key={link.title}/>
                     )}
-                    {session ? (
+                    {session?.user ? (
                         <>
                             {session.isAdmin && <NavLinks item={{title: "Admin" , path: "/admin"}}/>}
                             <form action={handleLogout}>

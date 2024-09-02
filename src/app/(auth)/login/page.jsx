@@ -1,7 +1,6 @@
 import LoginForm from "@/app/components/loginForm/LoginForm"
-import { handleGithubLogin, login } from "@/app/server/action"
 import styles from "./loginPage.module.css"
-import { auth, signIn } from "@/app/server/auth"
+import { handleGithubLogin } from "@/server/action"
 
 //auth() ci permette di poter loggare tutte le info sull'autenticazione 
 

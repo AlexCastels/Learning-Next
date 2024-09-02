@@ -1,10 +1,11 @@
 "use client"
-import { register } from "@/app/server/action"
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import styles from "./registerForm.module.css"
+import { register } from "@/server/action";
 
 //useFormState (in react diventa useActionState), è un hook che permette di gestire lo state di un form, dove il secondo param
 //formAction trigghera la funzione che deve essere specificata come primo argomento, il secondo argomento è il valore iniziale

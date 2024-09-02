@@ -152,3 +152,8 @@ NEXT AUTHENTICATION with AUTH.JS
 Per l'autenticazione in next utilizzaimo Auth.js, una libreria che permette di collegarsi a molteplici providers come github fb ecc ecc e permette di creare automaticamente i collegamenti per le richieste attraverso loro.
 Viene configurato in un certo modo , bisogna seguire la documentazione 
 Più appunti in Auth.js
+
+MIDDLEWARE
+Next consente l'utilizzo di middleware, per poterlo fare dovremo creare un file middleware.js o in SRC o nel folder generale, mai nella cartella app.
+Le middleware permettono di poter avviare delle funzioni ad ogni volta che viene effettuata una richiesta di navigazione in app
+Le middleware devono essere indipendenti da qualsiasi libreria js implementata nel proj

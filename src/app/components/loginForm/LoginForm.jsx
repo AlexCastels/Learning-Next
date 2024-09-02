@@ -1,10 +1,10 @@
 "use client"
 
-import { login } from "@/app/server/action"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useFormState } from "react-dom"
 import styles from "./loginForm.module.css"
+import { login } from "@/server/action"
 
 function LoginForm(){
     const router = useRouter()

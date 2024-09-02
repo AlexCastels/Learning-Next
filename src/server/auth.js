@@ -3,6 +3,7 @@ import GitHub from "next-auth/providers/github";
 import connectToDb, { User } from "./models";
 import CredentialProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
+import {authConfig} from "./auth.config"
 
 const login = async (credentials) => {
     try {
@@ -34,6 +35,7 @@ export const {
     signIn, //è una funzione che permette di poter iscriversi tramite il provider selezionato
     signOut, //permette di potersi sloggare con il proprio account
 } = NextAuth({
+    ...authConfig, //utilizziamo lo spread per poter copiare e aggiungere e non stostiruire il file già presente
     providers: [ //in providers possiamo dichiarare quali provider la nostra app può gestire, le config sono sul sito "auth"
         GitHub({
             clientId: process.env.GITHUB_ID, //si trovano nel file .env , sono i dati dell'utente collegato di github
@@ -64,6 +66,9 @@ export const {
     //DB tramiote il controllo su User.findOne e verifichiamo la mail, se non esiste creiamo un nuovo user utilizzando lo schema
     //creato in models.js e assegnamo i parametri che ci interessando, poi salviamo newUser con .save()
 
+    //authorized è una funzione che permette di poter verificare tramite la richiesta se un utente ha dei permessi rispetto
+    //ad un altro
+
     callbacks:{
         async signIn({user ,account, profile}){
             console.log(user ,account, profile);
@@ -85,6 +90,7 @@ export const {
                 }
             }
             return true
-        }
+        },
+        ...authConfig.callbacks //utilizziamo lo spread per poter copiare e aggiungere e non stostiruire il file già presente
     }
 });
