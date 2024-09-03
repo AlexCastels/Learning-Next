@@ -3,7 +3,7 @@
     flex-direction: column;
     gap: 20px;
 }
-  
+
 .container input,
 .container textarea,
 .container select {
@@ -12,8 +12,8 @@
     border: none;
     border-radius: 5px;
     color: var(--textColor);
-  }
-  
+}
+
 .container button {
     padding: 20px;
     cursor: pointer;
@@ -22,4 +22,4 @@
     border-radius: 5px;
     color: var(--textColor);
     font-weight: bold;
-  }
+}
